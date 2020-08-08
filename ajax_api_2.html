@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>The var Keyword Creates Variables</h2>
+<button type="button" onclick="loadDoc()">Submit</button>
+<p id="demo"></p>
+<div id="well"> 
+</div>
+<script>
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      //document.getElementById("demo").innerHTML = this.responseText;
+	     var data = JSON.parse(this.responseText);			
+				//document.getElementById("demo").innerHTML = data[1].username;	
+        var enc = "";
+        for(var i = 0; i < data.length; i++){
+          var id = data[i].id;
+          var username = data[i].username;
+          var contact = data[i].contact;
+          var email = data[i].email;
+          var pics = data[i].pics;
+          var created_at = data[i].created_at;
+          var updated_at = data[i].updated_at;
+
+          enc += "<div class='mi'>";       
+          enc += "<p>ID: " + id + "</p>";
+          enc += "<p>Username: " + username + "</p>";
+          enc += "<p>Contact Number: " + contact + "</p>";
+          enc += "<p>Email: " + email + "</p>";  
+          enc += "<p>Picture: " + pics + "</p>";   
+          enc += "<img src='" + pics + "'width='10%'>";
+          enc += "<p></p>"; 
+          enc += "<p>Created at: " + created_at + "</p>";
+          enc += "<p>Updated at: " + updated_at + "</p>";
+          enc += "<p><hr /></p>"; 
+          enc += "<p>&nbsp;</p>";       
+          enc += "</div>";
+        }
+        document.getElementById("well").innerHTML = enc;				
+    }
+  };
+  xhttp.open("GET", "http://progse/crudmvc/public/customer/testApi", true);
+  xhttp.send();
+}
+</script>
+</body>
+</html>
